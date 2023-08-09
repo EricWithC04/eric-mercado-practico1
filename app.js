@@ -3,6 +3,7 @@ const app = express();
 const morgan = require("morgan");
 const helmet = require("helmet");
 const cors = require("cors");
+const router = require("./routes/routes.js");
 require("dotenv").config();
 const port = process.env.PORT;
 
@@ -11,6 +12,7 @@ app.use(helmet());
 app.use(cors());
 app.use(express.json());
 
+app.use("/", router);
 app.get("*", (req, res) => {
   res.send("Error 404: Not found!, ruta no encontrada");
 });
