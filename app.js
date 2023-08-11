@@ -3,6 +3,7 @@ const app = express();
 const morgan = require("morgan");
 const helmet = require("helmet");
 const cors = require("cors");
+const path = require("path");
 const router = require("./routes/controllers.routes.js");
 const renders = require("./routes/routes.js");
 require("dotenv").config();
@@ -14,6 +15,9 @@ app.use(morgan("dev"));
 app.use(helmet());
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", renders);
 app.use("/api", router);
