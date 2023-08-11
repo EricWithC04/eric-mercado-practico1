@@ -1,7 +1,8 @@
 const { Router } = require("express");
-const router = Router();
-const { getImages } = require("../controllers/index.js");
+const renders = Router();
 
-router.get("/", getImages);
+const { renderImages } = require("../controllers/router.controllers.js");
 
-module.exports = router;
+renders.get("/", renderImages);
+
+module.exports = renders;
