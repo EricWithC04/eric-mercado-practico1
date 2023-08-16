@@ -3,24 +3,21 @@ const formulario = document.getElementById("formulario");
 formulario.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  //   const name = document.getElementById("nombre");
-  const image = await document.getElementById("imagen");
+  const fileToUpload = new FormData(formulario)
+  // console.log(fileToUpload.get("file"));
 
-  const imagenAGuardar = {
-    newImage: image.value,
-  };
+  const file = await document.getElementById("archivo");
 
-  const nuevaImagen = await fetch("http://localhost:3000/api/createImage", {
+  const nuevoArchivo = await fetch("http://localhost:4000/api/submitFile", {
     method: "POST",
-    body: JSON.stringify(imagenAGuardar),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  }).then((response) => response.json());
+    body: fileToUpload
+  })
+  .then((response) => response.json())
+  .then((res) => alert(res.msg))
 
-  if (!nuevaImagen) {
-    alert("Error al crear la imagen");
+  if (!nuevoArchivo) {
+    return { msg: "Error al subir el archivo!!" }
   } else {
-    alert("Imagen creada correctamente");
+    return { msg: "Archivo subido correctamente" }
   }
 });

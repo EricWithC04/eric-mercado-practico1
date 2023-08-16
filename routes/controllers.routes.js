@@ -1,8 +1,8 @@
 const { Router } = require("express");
 const router = Router();
-const { getImages, createImage } = require("../controllers/index.js");
+const { getImages, submitFile } = require("../controllers/index.js");
 
 router.get("/", getImages);
-router.post("/createImage", createImage);
+router.post("/submitFile", submitFile)
 
 module.exports = router;

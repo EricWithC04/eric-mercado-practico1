@@ -3,19 +3,23 @@
 <div
   class="vh-100 w-100 d-flex flex-column align-items-center justify-content-center"
 >
-  <form class="w-50 d-flex flex-column" id="formulario">
+  <form class="w-50 d-flex flex-column" id="formulario" enctype="multipart/form-data">
     <div class="mb-3">
       <label for="exampleFormControlInput1" class="form-label">Nombre</label>
       <input
         type="text"
         class="form-control"
         id="nombre"
-        placeholder="Introduce tu nombre aquí..."
+        placeholder="Introduce tu nombre aquí... (Este campo no es necesario) "
       />
     </div>
     <div class="mb-3">
-      <label for="exampleFormControlTextarea1" class="form-label">Imagen</label>
-      <textarea class="form-control" id="imagen" rows="3"></textarea>
+      <label for="exampleFormControlTextarea1" class="form-label">Archivo:</label>
+      <input
+        name="file"
+        type="file"
+        id="archivo"
+      />
     </div>
     <input
       type="submit"

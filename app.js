@@ -4,6 +4,7 @@ const morgan = require("morgan");
 const helmet = require("helmet");
 const cors = require("cors");
 const path = require("path");
+const fileUpload = require("express-fileupload")
 const router = require("./routes/controllers.routes.js");
 const renders = require("./routes/routes.js");
 require("dotenv").config();
@@ -16,6 +17,12 @@ app.use(helmet());
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(fileUpload({
+  createParentPath: true,
+  limits: { fileSize: 25 * 1024 * 1024 },
+  abortOnLimit: true,
+  responseOnLimit: "Archivo demasiado grande!"
+}))
 
 app.use(express.static(path.join(__dirname, "public")));
 
