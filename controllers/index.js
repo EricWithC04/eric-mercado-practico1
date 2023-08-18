@@ -19,13 +19,31 @@ const ctrlArchivo = {
         .json(err.message || "Error interno del servidor");
     }
   },
-  submitFile: async (req, res) => {
+  submitFileExpressFileupload: async (req, res) => {
     try {
       if (!req.files || Object.keys(req.files).length === 0) {
         return res.status(400).send("No se han recibido los archivos!")
       }
 
+      // console.log(req.files);
       let file = req.files.file
+      let path = `${__dirname}/../files/${file.name}`
+      file.mv(path, (err) => {
+        if (err) return res.status(500).send(err)
+
+        res.send({msg: "Archivo subido correctamente!"})
+      })
+    } catch (err) {
+      console.error(err);
+    }
+  },
+  submitFileCloudinary: async (req, res) => {
+    try {
+      if (!req.files || Object.keys(req.files).length === 0) {
+        return res.status(400).send("No se han recibido los archivos!")
+      }
+
+      let file = req.files.fileC
       let path = `${__dirname}/../files/${file.name}`
       file.mv(path, (err) => {
         if (err) return res.status(500).send(err)

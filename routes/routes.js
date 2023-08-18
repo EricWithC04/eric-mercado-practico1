@@ -1,8 +1,9 @@
 const { Router } = require("express");
 const renders = Router();
 
-const { renderImages } = require("../controllers/router.controllers.js");
+const { renderExpressFileupload, renderCloudinary } = require("../controllers/router.controllers.js");
 
-renders.get("/", renderImages);
+renders.get("/", renderExpressFileupload);
+renders.get("/cloudinary", renderCloudinary);
 
 module.exports = renders;

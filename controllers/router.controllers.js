@@ -1,6 +1,9 @@
 ctrl = {
-  renderImages: (req, res) => {
+  renderExpressFileupload: (req, res) => {
     res.render("index");
+  },
+  renderCloudinary: (req, res) => {
+    res.render("cloudinaryForm");
   },
 };
 
