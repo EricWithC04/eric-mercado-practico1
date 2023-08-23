@@ -4,9 +4,8 @@ formularioCloudinary.addEventListener("submit", async (e) => {
     e.preventDefault();
   
     const fileToUpload = new FormData(formularioCloudinary)
-    // console.log(fileToUpload);
   
-    const nuevoArchivo = await fetch("https://api.cloudinary.com/v1_1/du2qoqncg/image/upload", {
+    const nuevoArchivo = await fetch("http://localhost:4000/api/submitFileCloudinary", {
       method: "POST",
       body: fileToUpload
     })
@@ -16,6 +15,6 @@ formularioCloudinary.addEventListener("submit", async (e) => {
     if (!nuevoArchivo) {
       return { msg: "Error al subir el archivo!!" }
     } else {
-      return { msg: "Archivo subido correctamente" }
+      return { msg: "Archivo subido correctamente", nuevoArchivo }
     }
   });
