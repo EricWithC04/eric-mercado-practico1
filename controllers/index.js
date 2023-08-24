@@ -1,5 +1,6 @@
 const Imagen = require("../models/imagen.js");
 const cloudinary = require("cloudinary").v2;
+const { join } = require("path");
 
 const ctrlArchivo = {
   getImages: async (req, res) => {
@@ -44,16 +45,17 @@ const ctrlArchivo = {
       }
 
       let file = req.files.fileC
-      let path = `${__dirname}/../files/${file.name}`
+      let path = join(__dirname, "../files", file.name)
       file.mv(path, (err) => {
         if (err) return res.status(500).send(err)
-      })
-      cloudinary.uploader.upload(path, (error, result) => {
-        if (error) {
-          console.error('Error:', error);
-        } else {
-          console.log('Resultado:', result);
-        }
+        cloudinary.uploader.upload(path, (error, result) => {
+          if (error) {
+            console.error('Error:', error);
+          } else {
+            console.log('Resultado:', result);
+            res.status(201).send(result)
+          }
+        })
       })
     } catch (err) {
       console.error(err);
