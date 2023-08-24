@@ -21,6 +21,39 @@ const ctrlArchivo = {
         .json(err.message || "Error interno del servidor");
     }
   },
+  createImages: async (req, res) => {
+    try {
+      const newImage = await Imagen.create()
+
+      if (!newImage) {
+        throw {
+          status: 404,
+          message: "No se ha podido crear la Imagen.",
+        };
+      }
+
+      return res.status(201).json({msg: "Se ha creado la Imagen correctamente", newImage})
+    } catch (err) {
+      console.error(err);
+    }
+  },
+  deleteImage: async (req, res) => {
+    const { id } = req.params;
+    try {
+      const deletedImage = await Imagen.destroy(id)
+
+      if (!deletedImage) {
+        throw {
+          status: 404,
+          message: "No se ha podido eliminar la Imagen.",
+        };
+      }
+
+      return res.status(200).json({msg: "Se ha eliminado la Imagen correctamente", deletedImage})
+    } catch (err) {
+      console.error(err);
+    }
+  },
   submitFileExpressFileupload: async (req, res) => {
     try {
       if (!req.files || Object.keys(req.files).length === 0) {
