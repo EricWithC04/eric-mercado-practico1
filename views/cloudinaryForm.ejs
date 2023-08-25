@@ -1,9 +1,9 @@
 <%- include('partials/header') %>
 
 <div
-  class="vh-100 w-100 d-flex flex-column align-items-center justify-content-center"
+  class="w-100 d-flex flex-column align-items-center justify-content-center"
 >
-  <form class="w-50 d-flex flex-column" id="formularioCloudinary" enctype="multipart/form-data">
+  <form class="w-50 mt-5 d-flex flex-column" id="formularioCloudinary" enctype="multipart/form-data">
     <div class="mb-3">
         <h2>En este formulario podras subir archivos mediante Cloudinary</h2>
     </div>
@@ -19,9 +19,28 @@
       value="Enviar"
       class="btn btn-primary align-self-center"
     />
-    <div role="status" id="loader"></div>
+    <div class="align-self-center mt-5" role="status" id="loader"></div>
     <p id="resultado"></p>
   </form>
+  <div class="w-50 border d-flex flex-column" id="containerImages">
+    <!-- <div style="height: 100px; width: 96%;" class="d-flex align-items-center justify-content-between ms-3 me-3">
+      <img 
+        src="http://res.cloudinary.com/du2qoqncg/image/upload/v1692970930/ftz1bg8bb9cnurrqfhyc.jpg"
+        style="height: 90%;" 
+        alt="image"
+      >
+      <div style="height: 100%; width: 14%;" class="d-flex flex-column align-items-center justify-content-center">
+        <a 
+          href="http://res.cloudinary.com/du2qoqncg/image/upload/v1692970930/ftz1bg8bb9cnurrqfhyc.jpg" 
+          target="_blank"
+          class="w-100 mb-1"
+        >
+          <button class="w-100 btn btn-primary">URL</button>
+        </a>
+          <button class="btn btn-danger w-100" data-id=14 onClick=deleteImage(event)>DELETE</button>        
+      </div>
+    </div> -->
+  </div>
 </div>
 
 <script src="/subir-archivos-cloudinary.js"></script>

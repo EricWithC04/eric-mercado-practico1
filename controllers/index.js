@@ -90,7 +90,7 @@ const ctrlArchivo = {
   deleteImageOfDB: async (req, res) => {
     const { id } = req.params;
     try {
-      const deletedImage = await Imagen.destroy({where: {id}})
+      const deletedImage = await Imagen.destroy({where: {id: id}})
 
       if (!deletedImage) {
         throw {

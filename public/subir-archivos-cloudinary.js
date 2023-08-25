@@ -1,6 +1,70 @@
 const formularioCloudinary = document.getElementById("formularioCloudinary");
 const result = document.getElementById("resultado");
 const load = document.getElementById("loader");
+const contImages = document.getElementById("containerImages")
+
+const deleteImage = async (e) => {
+  e.preventDefault();
+
+  const id = e.target.dataset.id
+
+  const response = await fetch(`/api/deleteImageDB/${id}`, {
+    method: 'DELETE',
+    headers: {
+      "Content-Type": "application/json"
+    }
+}).then(res => {
+  console.log(res);
+  if (res.status === 200 || res.status === 201) {
+    insertImages();
+    return res.json()
+  } else {
+    const deletedImageError = res.json();
+    return {
+      msg: "Error al eliminar la imagen",
+      deletedImageError
+    }
+  }
+})
+
+  console.log(response);
+}
+
+function insertImages () {
+  const allImages = fetch("http://localhost:4000/api/")
+    .then(async res => {
+      const response = await res.json()
+      if (res.status === 404) {
+        return {status: 404, msg: response}
+      }
+      return response
+    })
+    .then(res => {
+      contImages.innerHTML = ""
+      if (res.status === 404) {
+        contImages.innerHTML = `<p>${res.msg}</p>`
+      } else {
+        res.forEach(image => {
+          contImages.innerHTML += `
+          <div style="height: 100px; width: 96%" class="d-flex align-items-center justify-content-between ms-3 me-3">
+            <img 
+              src="${image.url}"
+              style="height: 90%;" 
+              alt="image"
+            >
+            <div style="height: 100%; width: 14%;" class="d-flex flex-column align-items-center justify-content-center">
+              <a href="${image.url}" target="_blank" class="w-100 mb-1">
+                <button class="w-100 btn btn-primary">URL</button>
+              </a>
+              <button class="btn btn-danger w-100" data-id="${image.id}" onClick=deleteImage(event)>DELETE</button> 
+            </div>
+          </div>`
+        })
+      }
+    })
+}
+
+insertImages();
 
 formularioCloudinary.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -22,8 +86,8 @@ formularioCloudinary.addEventListener("submit", async (e) => {
     })
     .then((res) => {
       if (res.newImage.url.length) {
-        result.innerHTML = `Se ha subido el archivo correctamente, puedes acceder a el mediante este link: ${res.newImage.url}`
         load.classList.remove("spinner-border")
+        insertImages()
       }
     })
   });
