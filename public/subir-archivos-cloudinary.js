@@ -21,8 +21,8 @@ formularioCloudinary.addEventListener("submit", async (e) => {
       }
     })
     .then((res) => {
-      if (res.url.length) {
-        result.innerHTML = `Se ha subido el archivo correctamente, puedes acceder a el mediante este link: ${res.url}`
+      if (res.newImage.url.length) {
+        result.innerHTML = `Se ha subido el archivo correctamente, puedes acceder a el mediante este link: ${res.newImage.url}`
         load.classList.remove("spinner-border")
       }
     })

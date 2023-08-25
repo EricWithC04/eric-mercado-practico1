@@ -11,7 +11,7 @@ const Imagen = sequelize.define(
       primaryKey: true,
       allowNull: false,
     },
-    image: {
+    url: {
       type: DataTypes.STRING,
       allowNull: false,
     },

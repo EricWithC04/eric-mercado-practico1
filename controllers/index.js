@@ -2,6 +2,30 @@ const Imagen = require("../models/imagen.js");
 const cloudinary = require("cloudinary").v2;
 const { join } = require("path");
 
+async function createImages (url) {
+  try {
+    const newImage = await Imagen.create({
+      url: url
+    })
+
+    if (!newImage) {
+      throw {
+        status: 404,
+        message: "No se ha podido crear la Imagen.",
+      };
+    }
+
+    const response = {
+      msg: "Se ha creado la Imagen correctamente",
+      newImage
+    }
+
+    return response
+  } catch (err) {
+    console.error(err);
+  }
+}
+
 const ctrlArchivo = {
   getImages: async (req, res) => {
     try {
@@ -19,39 +43,6 @@ const ctrlArchivo = {
       res
         .status(err.status || 500)
         .json(err.message || "Error interno del servidor");
-    }
-  },
-  createImages: async (req, res) => {
-    try {
-      const newImage = await Imagen.create()
-
-      if (!newImage) {
-        throw {
-          status: 404,
-          message: "No se ha podido crear la Imagen.",
-        };
-      }
-
-      return res.status(201).json({msg: "Se ha creado la Imagen correctamente", newImage})
-    } catch (err) {
-      console.error(err);
-    }
-  },
-  deleteImage: async (req, res) => {
-    const { id } = req.params;
-    try {
-      const deletedImage = await Imagen.destroy(id)
-
-      if (!deletedImage) {
-        throw {
-          status: 404,
-          message: "No se ha podido eliminar la Imagen.",
-        };
-      }
-
-      return res.status(200).json({msg: "Se ha eliminado la Imagen correctamente", deletedImage})
-    } catch (err) {
-      console.error(err);
     }
   },
   submitFileExpressFileupload: async (req, res) => {
@@ -81,15 +72,39 @@ const ctrlArchivo = {
       let path = join(__dirname, "../files", file.name)
       file.mv(path, (err) => {
         if (err) return res.status(500).send(err)
-        cloudinary.uploader.upload(path, (error, result) => {
+        cloudinary.uploader.upload(path, async (error, result) => {
           if (error) {
             console.error('Error:', error);
+            res.status(404).send({ msg: "No se ha podido subir correctamente la imagen", error })
           } else {
             console.log('Resultado:', result);
-            res.status(201).send(result)
+            const createdImage = await createImages(result.url)
+            res.status(201).send(createdImage);
           }
         })
       })
+    } catch (err) {
+      console.error(err);
+    }
+  },
+  deleteImageOfDB: async (req, res) => {
+    const { id } = req.params;
+    try {
+      const deletedImage = await Imagen.destroy({where: {id}})
+
+      if (!deletedImage) {
+        throw {
+          status: 404,
+          message: "No se ha podido eliminar la Imagen.",
+        };
+      }
+  
+    const response = {
+      msg: "Se ha eliminado la Imagen correctamente", 
+      deletedImage
+    }
+
+    return res.status(200).send(response)
     } catch (err) {
       console.error(err);
     }
