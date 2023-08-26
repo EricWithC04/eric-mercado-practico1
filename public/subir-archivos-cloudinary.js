@@ -46,13 +46,13 @@ function insertImages () {
       } else {
         res.forEach(image => {
           contImages.innerHTML += `
-          <div style="height: 100px; width: 96%" class="d-flex align-items-center justify-content-between ms-3 me-3">
+          <div class="divImage d-flex align-items-center justify-content-between ms-3 me-3">
             <img 
               src="${image.url}"
-              style="height: 90%;" 
+              class="imageHeight"
               alt="image"
             >
-            <div style="height: 100%; width: 14%;" class="d-flex flex-column align-items-center justify-content-center">
+            <div class="divButtons d-flex flex-column align-items-center justify-content-center">
               <a href="${image.url}" target="_blank" class="w-100 mb-1">
                 <button class="w-100 btn btn-primary">URL</button>
               </a>
