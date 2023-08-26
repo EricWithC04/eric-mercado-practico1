@@ -4,11 +4,9 @@ formulario.addEventListener("submit", async (e) => {
   e.preventDefault();
 
   const fileToUpload = new FormData(formulario)
-  // console.log(fileToUpload.get("file"));
+  // console.log(fileToUpload);
 
-  const file = await document.getElementById("archivo");
-
-  const nuevoArchivo = await fetch("http://localhost:4000/api/submitFile", {
+  const nuevoArchivo = await fetch("http://localhost:4000/api/submitFileExpress", {
     method: "POST",
     body: fileToUpload
   })
@@ -21,3 +19,4 @@ formulario.addEventListener("submit", async (e) => {
     return { msg: "Archivo subido correctamente" }
   }
 });
+

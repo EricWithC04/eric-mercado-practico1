@@ -5,20 +5,13 @@
 >
   <form class="w-50 d-flex flex-column" id="formulario" enctype="multipart/form-data">
     <div class="mb-3">
-      <label for="exampleFormControlInput1" class="form-label">Nombre</label>
-      <input
-        type="text"
-        class="form-control"
-        id="nombre"
-        placeholder="Introduce tu nombre aquí... (Este campo no es necesario) "
-      />
+      <h2>En este formulario podras subir archivos mediante Express-fileupload</h2>
     </div>
     <div class="mb-3">
-      <label for="exampleFormControlTextarea1" class="form-label">Archivo:</label>
+      <label for="exampleFormControlTextarea1" class="form-label">Archivo (file-upload):</label>
       <input
         name="file"
         type="file"
-        id="archivo"
       />
     </div>
     <input
@@ -29,6 +22,6 @@
   </form>
 </div>
 
-<script src="/crear-imagen.js"></script>
+<script src="/subir-archivos-express.js"></script>
 
 <%- include('partials/footer') %>

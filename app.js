@@ -8,12 +8,19 @@ const fileUpload = require("express-fileupload")
 const router = require("./routes/controllers.routes.js");
 const renders = require("./routes/routes.js");
 require("dotenv").config();
+const cloudinary = require("cloudinary")
 const port = process.env.PORT;
+
+cloudinary.v2.config({ 
+  cloud_name: process.env.CLOUD_NAME, 
+  api_key: process.env.API_KEY, 
+  api_secret: process.env.API_SECRET 
+})
 
 app.set("view engine", "ejs");
 
 app.use(morgan("dev"));
-app.use(helmet());
+// app.use(helmet());
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
